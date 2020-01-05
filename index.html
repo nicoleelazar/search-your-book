@@ -73,8 +73,11 @@
                             <a href="#" class="list-group-item list-group-item-action"
                                 onclick="loadBook('alice_in_wonderland.txt', 'Alice in Wonderland')">Alice in
                                 Wonderland</a>
-                            <a href="#" class="list-group-item list-group-item-action">book 2</a>
-                            <a href="#" class="list-group-item list-group-item-action">book 3</a>
+                            <a href="#" class="list-group-item list-group-item-action"
+                                onclick="loadBook('pride_and_prejudice.txt', 'Pride and Prejudice')">Pride and
+                                Prejudice</a>
+                            <a href="#" class="list-group-item list-group-item-action"
+                                onclick="loadBook('little_women.txt', 'Little Women')">Little Women</a>
                         </div>
                     </div>
                     <div class="card-footer text-muted">
@@ -93,6 +96,42 @@
                                 <ul class="list-unstyled" id="most-used-word"></ul>
                             </div>
                         </div>
+                    </div>
+                    <div class="card-footer text-muted">
+                    </div>
+                </div>
+
+
+
+                <!-- Least used words -->
+                <div class="card">
+                    <div class="card-header">
+                        Least used Words
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <ul class="list-unstyled" id="least-used-word"></ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer text-muted">
+                    </div>
+                </div>
+
+
+
+                <!-- Text stats -->
+                <div class="card">
+                    <div class="card-header">
+                        Statistics
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-unstyled">
+                            <li id="text-length"></li>
+                            <li id="word-count"></li>
+                            <li id="character-count"></li>
+                        </ul>
                     </div>
                     <div class="card-footer text-muted">
                     </div>
