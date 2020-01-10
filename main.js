@@ -1,9 +1,10 @@
 const fileName = document.getElementById('file-name');
-let fileContent = document.getElementById('file-content');
+const fileContent = document.getElementById('file-content');
 const searchStat = document.getElementById('search-statistic');
 const keyWord = document.getElementById('keyword');
 const topFiveWords = document.getElementById('most-used-word');
 const bottomFiveWords = document.getElementById('least-used-word');
+const searchButton = document.getElementById('search-button');
 
 
 
@@ -45,19 +46,6 @@ function loadBook(textFileName, displayName) {
 
 }
 
-
-function markText() {
-    let bookTextInField = fileContent.innerHTML;
-    let searchedWord = keyWord.value;
-
-    let allMatches = new RegExp(searchedWord, "gi");
-    let markMe = "<mark>hello</mark>";
-
-    let newContent = bookTextInField.replace(allMatches, markMe);
-
-    fileContent.innerHTML = newContent
-
-}
 
 
 let testString = "Essentials is a series lolly-pop is a that_ series, series a cover's the most used used and important methods for topic."
@@ -103,7 +91,7 @@ function uncommonWords() {
 }
 
 
-// tally each word
+// tally each word with a count (key: value)
 function sortedArray() {
     let textObject = {};
 
@@ -134,6 +122,7 @@ function sortedArray() {
 }
 
 
+// isolate and display 5 most used words
 function topFiveBookWords(anySortedArray) {
 
     let topFive = anySortedArray.slice(0, 5);
@@ -149,6 +138,7 @@ function topFiveBookWords(anySortedArray) {
 }
 
 
+// isolate and display 5 least used words
 function bottomFiveBookWords(anySortedArray) {
 
     let bottomFive = anySortedArray.slice(-5);
@@ -163,74 +153,34 @@ function bottomFiveBookWords(anySortedArray) {
 }
 
 
+// for search input field
+function markText() {
+
+    // removes the <mark> tag to clear already highlighted words
+    let markedWords = document.querySelectorAll('.marked');
+    for (let i = 0; i < markedWords.length; i++) {
+        markedWords[i].outerHTML = markedWords[i].innerHTML;
+    }
 
 
+    // find and mark searched keyword
+    let bookTextInField = fileContent.innerHTML;
+    let keyword = keyWord.value;
 
+    let allMatches = new RegExp("\\b" + keyword + "\\b", "gi");
+    let markMe = '<mark class="marked">$&</mark>';
+    let newContent = bookTextInField.replace(allMatches, markMe);
 
-// //TEST CODE ON TEST STRING
+    fileContent.innerHTML = newContent;
 
+    // display number of marked words found
+    let newMarkedWords = document.querySelectorAll('.marked');
+    searchStat.innerHTML = `${newMarkedWords.length} matches found.`
 
-// let testString = "Essentials is a series lolly-pop is a that_ series, series a cover's the most used used and important methods for topic."
+    //scroll first match into view
+    newMarkedWords[0].scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+    });
 
-// // part 1
-// //remove all symbols not including hyphen
-// let textArray = testString.replace(/([^A-Za-z0-9\s-])/g, "").toLowerCase().split(' ');
-
-// //function 2
-// for (let i = 0; i < stopWords.length; i++) {
-//     for (let j = 0; j < textArray.length; j++) {
-//         if (stopWords[i] === textArray[j]) {
-//             textArray.splice(j, 1);
-//         }
-//     }
-// }
-// console.log(textArray.length);
-
-
-
-
-// //function 3
-// let textObject = {};
-
-// for (let word of textArray) {
-
-//     if (textObject[word] > 0) {
-//         textObject[word] += 1;
-//     } else {
-//         //get the string into the object
-//         textObject[word] = 1;
-
-//     }
-//     console.log(textObject)
-// }
-
-// let treatedArr = Object.entries(textObject);
-
-
-
-// treatedArr.sort(function (first, second) {
-//     return second[1] - first[1];
-// });
-// console.log(treatedArr);
-
-
-// //function 4
-// let topFive = treatedArr.slice(0, 5);
-// console.log(topFive);
-
-// for (let topword of topFive) {
-//     let listItemTop = document.createElement('li');
-//     topFiveWords.appendChild(listItemTop);
-
-//     listItemTop.innerHTML = `${topword[0]}: ${topword[1]}`
-
-// }
-
-// let bottomFive = treatedArr.slice(-5);
-// console.log(bottomFive)
-
-// for (let bottomword of bottomFive) {
-//     let listItemBottom = document.createElement('li');
-//     bottomFiveWords.appendChild(listItemBottom);
-//     listItemBottom.innerHTML = `${bottomword[0]}: ${bottomword[1]}`
-// }
+}
