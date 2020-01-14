@@ -10,18 +10,32 @@ let bookTextArray;
 
 
 
-window.onload = () => {
-    fileContent.value = '';
-    searchStat.innerHTML = '';
+// window.onload = () => {
+//     fileContent.value = '';
+//     searchStat.innerHTML = '';
+//     keyWord.value = '';
+// }
+
+function reset() {
+    bookTextArray = '';
     keyWord.value = '';
+    searchStat.innerHTML = '';
+    wordCount.innerHTML = '';
+
+    while (topFiveWords.hasChildNodes()) {
+        topFiveWords.removeChild(topFiveWords.firstChild);
+    }
+
+    while (bottomFiveWords.hasChildNodes()) {
+        bottomFiveWords.removeChild(bottomFiveWords.firstChild);
+    }
+
 }
-
-
 
 
 function loadBook(textFileName, displayName) {
 
-    fileName.innerHTML = displayName;
+   reset();
 
     //http request
     let http = new XMLHttpRequest();
@@ -34,33 +48,29 @@ function loadBook(textFileName, displayName) {
         if (this.readyState == 4 && this.status == 200) {
             currentBook = http.responseText;
 
-            fileContent.innerHTML = currentBook.replace(/(?:\n\r|\n|\r)/g, '<br>');
+            fileName.innerHTML = displayName;
 
+            fileContent.innerHTML = currentBook.replace(/(?:\n\r|\n|\r)/g, '<br>');
 
             fileContent.scrollTop = 0;
 
-
-            tallyText(fileContent);
+            tallyText(currentBook);
 
 
         }
     }
 
+
 }
 
 
 
-let testString = "Essentials  is  a series  lolly-pop  is  a  that_ series, series a cover's the most used used and important methods for topic."
-
-
-
-
-
-
+// let testString = "Essentials  is  a series  lolly-pop  is  a  that_ series, series a cover's the most used used and important methods for topic."
 
 
 
 function tallyText(anyText) {
+
 
     // find only words between 2 white spaces
     bookTextArray = anyText.toLowerCase().match(/\b\S+\b/g);
@@ -114,7 +124,7 @@ function sortedArray() {
         return second[1] - first[1];
     });
 
-    console.log(tallyArray);
+    // console.log(tallyArray);
 
     topFiveBookWords(tallyArray);
 
@@ -135,6 +145,7 @@ function topFiveBookWords(anySortedArray) {
         listItemTop.innerHTML = `${topword[0]}: ${topword[1]}`
 
     }
+    console.log(topFiveWords.childNodes)
 
 }
 
