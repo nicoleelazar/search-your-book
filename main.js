@@ -1,10 +1,12 @@
 const fileName = document.getElementById('file-name');
 const fileContent = document.getElementById('file-content');
 const searchStat = document.getElementById('search-statistic');
+const wordCount = document.getElementById('word-count');
 const keyWord = document.getElementById('keyword');
 const topFiveWords = document.getElementById('most-used-word');
 const bottomFiveWords = document.getElementById('least-used-word');
-const searchButton = document.getElementById('search-button');
+
+let bookTextArray;
 
 
 
@@ -38,7 +40,7 @@ function loadBook(textFileName, displayName) {
             fileContent.scrollTop = 0;
 
 
-            // tallyText(currentBook);
+            tallyText(fileContent);
 
 
         }
@@ -48,33 +50,32 @@ function loadBook(textFileName, displayName) {
 
 
 
-let testString = "Essentials is a series lolly-pop is a that_ series, series a cover's the most used used and important methods for topic."
+let testString = "Essentials  is  a series  lolly-pop  is  a  that_ series, series a cover's the most used used and important methods for topic."
 
 
 
 
 
 
-
-
-let bookTextArray;
-
-tallyText(testString);
 
 
 
 function tallyText(anyText) {
-    // text to array removing symbols
-    bookTextArray = anyText.replace(/([^A-Za-z0-9\s-])/g, "").toLowerCase().split(' ');
 
-    //do this here for word count
-    console.log(bookTextArray.length)
+    // find only words between 2 white spaces
+    bookTextArray = anyText.toLowerCase().match(/\b\S+\b/g);
+
+    console.log(bookTextArray)
+
+    //word count includes stop words
+    wordCount.innerHTML = `Word Count: ${bookTextArray.length}`;
 
     uncommonWords();
 
     sortedArray();
 
 }
+
 
 
 
@@ -177,10 +178,10 @@ function markText() {
     let newMarkedWords = document.querySelectorAll('.marked');
     searchStat.innerHTML = `${newMarkedWords.length} matches found.`
 
-    //scroll first match into view
-    newMarkedWords[0].scrollIntoView({
-        behavior: "smooth",
-        block: "start"
-    });
+    // scroll first match into view leaving parent div stationary
+    if (newMarkedWords.length > 0) {
+        let target = newMarkedWords[0];
+        target.parentNode.scrollTop = target.offsetTop - target.parentNode.offsetTop;
+    }
 
 }

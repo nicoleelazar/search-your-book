@@ -1,9 +1,42 @@
+:root {
+    --c-blue-dark: rgb(0, 38, 65);
+    --c-white-blue: rgb(248, 251, 255);
+    --c-grey-light: #6C757D;
+}
+
+
+body {
+    background: rgb(0, 33, 57);
+    background: linear-gradient(0deg, rgba(0, 33, 57, 1) 0%, rgb(32, 97, 138) 100%);
+}
+
 .page-title {
     margin-top: 40px;
     margin-bottom: 30px;
+    color: var(--c-white-blue);
+}
+
+.page-info {
+    color: var(--c-white-blue);
+}
+
+.card-header,
+.list-group-item,
+.card-footer,
+.card-body {
+    color: var(--c-blue-dark);
+}
+
+.card-header {
+    font-weight: bold;
 }
 
 .scrollable-area {
     height: 500px;
     overflow: auto;
+    color: var(--c-grey-light);
+}
+
+.card-footer {
+    height: 45px;
 }
