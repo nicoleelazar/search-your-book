@@ -5,22 +5,24 @@ const wordCount = document.getElementById('word-count');
 const keyWord = document.getElementById('keyword');
 const topFiveWords = document.getElementById('most-used-word');
 const bottomFiveWords = document.getElementById('least-used-word');
+const browseInput = document.getElementById('customFile');
+const browseInputText = document.querySelector('.custom-file-label');
+
 
 let bookTextArray;
 
 
 
 // window.onload = () => {
-//     fileContent.value = '';
-//     searchStat.innerHTML = '';
-//     keyWord.value = '';
 // }
 
-function reset() {
+function clearFields() {
     bookTextArray = '';
     keyWord.value = '';
     searchStat.innerHTML = '';
     wordCount.innerHTML = '';
+    fileContent.innerHTML = '';
+    fileName.innerHTML = 'Book Title';
 
     while (topFiveWords.hasChildNodes()) {
         topFiveWords.removeChild(topFiveWords.firstChild);
@@ -33,9 +35,45 @@ function reset() {
 }
 
 
+// load a text file from User
+browseInput.addEventListener('change', () => {
+    console.log('something pressed')
+
+    clearFields();
+
+
+    // display the file in input field
+    let browsedFileName = browseInput.files[0].name;
+    browseInputText.innerHTML = browsedFileName;
+
+     
+    let reader = new FileReader();
+
+    reader.onload = function() {
+        fileName.innerHTML = browsedFileName;
+
+        //display file text
+        let browsedResult = reader.result;
+        fileContent.innerHTML = browsedResult.replace(/(?:\n\r|\n|\r)/g, '<br>');
+
+        tallyText(browsedResult);
+    }
+
+    reader.readAsText(browseInput.files[0]);
+
+    // to allow loading of same file consecutively
+    browseInput.value = '';
+
+})
+
+
+
+
+// load text file from provided list
 function loadBook(textFileName, displayName) {
 
-   reset();
+   clearFields();
+   browseInputText.innerHTML = '';
 
     //http request
     let http = new XMLHttpRequest();
@@ -44,8 +82,12 @@ function loadBook(textFileName, displayName) {
     http.open("GET", url, true);
     http.send();
 
+
+
     http.onreadystatechange = function () {
+
         if (this.readyState == 4 && this.status == 200) {
+            
             currentBook = http.responseText;
 
             fileName.innerHTML = displayName;

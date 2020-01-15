@@ -32,12 +32,9 @@
                     </div>
                     <div class="card-body">
                         <div class="scrollable-area" id="file-content">
-                            Select a book from the list on the right
+                            Select a book from the list or load your own .txt file
 
                         </div>
-                        <!-- <textarea class="form-control" id="file-content" rows="20"
-                            placeholder="Select a book from the list or paste your text here"></textarea> -->
-
                     </div>
                     <div class="card-footer text-muted" id="word-count">
                     </div>
@@ -77,15 +74,33 @@
                                 onclick="loadBook('alice_in_wonderland.txt', 'Alice in Wonderland')">Alice in
                                 Wonderland</a>
                             <a href="#" class="list-group-item list-group-item-action"
-                                onclick="loadBook('pride_and_prejudice.txt', 'Pride and Prejudice')">Pride and
-                                Prejudice</a>
+                                onclick="loadBook('wizard_oz.txt', 'The Wizard of Oz')">The Wizard of Oz</a>
                             <a href="#" class="list-group-item list-group-item-action"
-                                onclick="loadBook('little_women.txt', 'Little Women')">Little Women</a>
+                                onclick="loadBook('peter_pan.txt', 'Peter Pan')">Peter Pan</a>
                         </div>
                     </div>
                     <div class="card-footer text-muted">
                     </div>
                 </div>
+
+                <!-- Brows file -->
+
+                <div class="card my-4">
+                    <div class="card-header">
+                        Load a file
+                    </div>
+                    <div class="card-body">
+                        <div class="input-group">
+                            <div class="custom-file">
+                                <input accept=".txt" type="file" class="custom-file-input" id="customFile">
+                                <label class="custom-file-label" for="customFile">Choose file</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer text-muted" id="search-statistic">
+                    </div>
+                </div>
+
 
 
                 <!-- Most used words -->

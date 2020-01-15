@@ -1,19 +1,26 @@
+@import url('https://fonts.googleapis.com/css?family=Merienda+One|Pacifico&display=swap');
+
 :root {
     --c-blue-dark: rgb(0, 38, 65);
     --c-white-blue: rgb(248, 251, 255);
     --c-grey-light: #6C757D;
+    --f-title: 'Pacifico', cursive;
+    /* --f-title: 'Merienda One', cursive; */
 }
-
 
 body {
     background: rgb(0, 33, 57);
     background: linear-gradient(0deg, rgba(0, 33, 57, 1) 0%, rgb(32, 97, 138) 100%);
+    background-repeat: no-repeat;
+    min-height: 100vh;
 }
 
 .page-title {
     margin-top: 40px;
     margin-bottom: 30px;
     color: var(--c-white-blue);
+    font-family: var(--f-title);
+    font-size: 60px;
 }
 
 .page-info {
