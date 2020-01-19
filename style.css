@@ -45,5 +45,21 @@ body {
 }
 
 .card-footer {
-    height: 45px;
+    height: 60px;
+}
+
+/* #search-statistic {
+    float: left;
+} */
+
+.step-through {
+    float: right;
+}
+
+mark {
+    background-color: aqua;
+}
+
+.mark-selected {
+    background-color: pink;
 }

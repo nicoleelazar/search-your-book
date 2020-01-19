@@ -7,6 +7,9 @@ const topFiveWords = document.getElementById('most-used-word');
 const bottomFiveWords = document.getElementById('least-used-word');
 const browseInput = document.getElementById('customFile');
 const browseInputText = document.querySelector('.custom-file-label');
+const previousButton = document.getElementById('previous-btn');
+const nextButton = document.getElementById('next-btn');
+
 
 
 let bookTextArray;
@@ -33,6 +36,43 @@ function clearFields() {
     }
 
 }
+
+// load text file from provided list
+function loadBook(textFileName, displayName) {
+
+    clearFields();
+    browseInputText.innerHTML = '';
+ 
+     //http request
+     let http = new XMLHttpRequest();
+     let url = `books/${textFileName}`;
+ 
+     http.open("GET", url, true);
+     http.send();
+ 
+ 
+ 
+     http.onreadystatechange = function () {
+ 
+         if (this.readyState == 4 && this.status == 200) {
+             
+             currentBook = http.responseText;
+ 
+             fileName.innerHTML = displayName;
+ 
+             fileContent.innerHTML = currentBook.replace(/(?:\n\r|\n|\r)/g, '<br>');
+ 
+             fileContent.scrollTop = 0;
+ 
+             tallyText(currentBook);
+ 
+ 
+         }
+     }
+ 
+ 
+ }
+ 
 
 
 // load a text file from User
@@ -69,41 +109,6 @@ browseInput.addEventListener('change', () => {
 
 
 
-// load text file from provided list
-function loadBook(textFileName, displayName) {
-
-   clearFields();
-   browseInputText.innerHTML = '';
-
-    //http request
-    let http = new XMLHttpRequest();
-    let url = `books/${textFileName}`;
-
-    http.open("GET", url, true);
-    http.send();
-
-
-
-    http.onreadystatechange = function () {
-
-        if (this.readyState == 4 && this.status == 200) {
-            
-            currentBook = http.responseText;
-
-            fileName.innerHTML = displayName;
-
-            fileContent.innerHTML = currentBook.replace(/(?:\n\r|\n|\r)/g, '<br>');
-
-            fileContent.scrollTop = 0;
-
-            tallyText(currentBook);
-
-
-        }
-    }
-
-
-}
 
 
 
@@ -117,7 +122,7 @@ function tallyText(anyText) {
     // find only words between 2 white spaces
     bookTextArray = anyText.toLowerCase().match(/\b\S+\b/g);
 
-    console.log(bookTextArray)
+    // console.log(bookTextArray)
 
     //word count includes stop words
     wordCount.innerHTML = `Word Count: ${bookTextArray.length}`;
@@ -187,7 +192,7 @@ function topFiveBookWords(anySortedArray) {
         listItemTop.innerHTML = `${topword[0]}: ${topword[1]}`
 
     }
-    console.log(topFiveWords.childNodes)
+    // console.log(topFiveWords.childNodes)
 
 }
 
@@ -206,8 +211,12 @@ function bottomFiveBookWords(anySortedArray) {
 
 }
 
+let newMarkedWords;
+let target;
+let keyword;
+let selectedIndex;
 
-// for search input field
+// for search input, highlight text
 function markText() {
 
     // removes the <mark> tag to clear already highlighted words
@@ -216,25 +225,91 @@ function markText() {
         markedWords[i].outerHTML = markedWords[i].innerHTML;
     }
 
-
     // find and mark searched keyword
     let bookTextInField = fileContent.innerHTML;
-    let keyword = keyWord.value;
+    keyword = keyWord.value;
 
     let allMatches = new RegExp("\\b" + keyword + "\\b", "gi");
     let markMe = '<mark class="marked">$&</mark>';
-    let newContent = bookTextInField.replace(allMatches, markMe);
 
-    fileContent.innerHTML = newContent;
+
+    if (keyword !== '') {
+        let newContent = bookTextInField.replace(allMatches, markMe);
+        fileContent.innerHTML = newContent;
+    }
+
+    newMarkedWords = document.querySelectorAll('.marked');        
 
     // display number of marked words found
-    let newMarkedWords = document.querySelectorAll('.marked');
-    searchStat.innerHTML = `${newMarkedWords.length} matches found.`
+    if (keyword !== '' && newMarkedWords.length > 0) {
 
-    // scroll first match into view leaving parent div stationary
-    if (newMarkedWords.length > 0) {
-        let target = newMarkedWords[0];
+        // scroll first match into view leaving parent div stationary
+        selectedIndex = 0;
+        target = newMarkedWords[selectedIndex];
         target.parentNode.scrollTop = target.offsetTop - target.parentNode.offsetTop;
+        target.classList.add('mark-selected');
+    
+        searchStat.innerHTML = `${newMarkedWords.length} matches found.`;
+    }
+    else if (newMarkedWords.length == 0 && keyword !== '') {
+        searchStat.innerHTML = 'No matches found.';
+
+    }
+    else if (newMarkedWords.length == 0 && keyword == '') {
+        searchStat.innerHTML = '';
     }
 
 }
+
+
+// listener for 'next' button
+nextButton.addEventListener('click', () => {
+
+    target.classList.remove('mark-selected');
+
+    if (keyword == '' || (keyword !== '' && newMarkedWords.length == 0)) {
+        return;
+    }
+
+    else if (keyword !== '' && selectedIndex < (newMarkedWords.length - 1)) {
+        selectedIndex ++;
+
+    }
+    else {
+        selectedIndex = 0;
+    }
+
+    // move selected index to top and change highlight color
+    target = newMarkedWords[selectedIndex];
+    target.parentNode.scrollTop = target.offsetTop - target.parentNode.offsetTop;
+    target.classList.add('mark-selected');
+
+})
+
+
+// listener for 'previous' button
+previousButton.addEventListener('click', () => {
+
+    target.classList.remove('mark-selected');
+
+    if (keyword == '' || (keyword !== '' && newMarkedWords.length == 0)) {
+        return;
+    }
+
+    else if (keyword !== '' && selectedIndex > 0 && selectedIndex < newMarkedWords.length) {
+        selectedIndex --;
+
+    }
+    else if (keyword !== '' && selectedIndex == 0) {
+        selectedIndex = newMarkedWords.length - 1;
+    }
+
+    // move selected index to top and change highlight color
+    target = newMarkedWords[selectedIndex];
+    target.parentNode.scrollTop = target.offsetTop - target.parentNode.offsetTop;
+    target.classList.add('mark-selected');
+})
+
+
+
+// highlight selected word a different color and find code for arrows < > 
