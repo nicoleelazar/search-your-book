@@ -5,7 +5,6 @@
     --c-white-blue: rgb(248, 251, 255);
     --c-grey-light: #6C757D;
     --f-title: 'Pacifico', cursive;
-    /* --f-title: 'Merienda One', cursive; */
 }
 
 body {
@@ -25,6 +24,7 @@ body {
 
 .page-info {
     color: var(--c-white-blue);
+    font-size: 18px;
 }
 
 .card-header,
@@ -48,18 +48,15 @@ body {
     height: 60px;
 }
 
-/* #search-statistic {
-    float: left;
-} */
-
 .step-through {
     float: right;
 }
 
 mark {
-    background-color: aqua;
+    background-color: rgb(255, 237, 138);
 }
 
 .mark-selected {
-    background-color: pink;
+    background-color: rgb(255, 188, 111);
 }
+

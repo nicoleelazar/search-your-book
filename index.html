@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>Title</title>
+    <title>Search Your Book</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
@@ -16,8 +16,9 @@
         <!-- page heading --------------------->
         <div class="row">
             <div class="col-md-12">
-                <h1 class="page-title">Book Statistics</h1>
-                <p class="page-info">Search for a word to find out how many times and where in the text it is used.</p>
+                <h1 class="page-title">Search Your Book</h1>
+                <p class="page-info">Search for a word to find out how many times and where in the text it is used. Step
+                    through the words found in the text using the left and right arrow buttons.</p>
             </div>
         </div>
 
@@ -32,8 +33,7 @@
                     </div>
                     <div class="card-body">
                         <div class="scrollable-area" id="file-content">
-                            Select a book from the list or load your own .txt file
-
+                            Select a book from the list or press browse to load in your own .txt file
                         </div>
                     </div>
                     <div class="card-footer text-muted" id="word-count">
@@ -61,8 +61,8 @@
                     <div class="card-footer text-muted">
                         <span id="search-statistic"></span>
                         <span class="step-through">
-                            <button class="btn btn-secondary" type="button" id="previous-btn">P</button>
-                            <button class="btn btn-secondary" type="button" id="next-btn">N</button>
+                            <button class="btn btn-secondary" type="button" id="previous-btn">&#60;</button>
+                            <button class="btn btn-secondary" type="button" id="next-btn">&#62;</button>
                         </span>
                     </div>
                 </div>
@@ -142,24 +142,6 @@
                     </div>
                 </div>
 
-
-
-                <!-- Text stats
-                <div class="card my-4">
-                    <div class="card-header">
-                        Statistics
-                    </div>
-                    <div class="card-body">
-                        <ul class="list-unstyled">
-                            <li id="text-length"></li>
-                            <li id="word-count"></li>
-                            <li id="character-count"></li>
-                        </ul>
-                    </div>
-                    <div class="card-footer text-muted">
-                    </div>
-                </div>
- -->
             </div>
 
 
